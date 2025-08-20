@@ -1,21 +1,34 @@
-# SHH Node (Pre-Contract Alpha)
+# SHH Node (Phase 2 - Smart Contract Required)
 
-Run a node for the **Shh.cash** privacy relay network. This repo lets developers set up and register nodes **before** the on‑chain Router program launches. In the MVP phase, nodes relay off‑chain sends and earn **SOL** fees via the dispatcher. After launch, execution and payouts will move **on‑chain** (no change to your node interface).
+⚠️ **IMPORTANT: Nodes are NOT operational yet!** ⚠️
+
+This repository allows developers to **prepare and test** node infrastructure for the **Shh.cash** privacy relay network. Nodes will only become operational in **Phase 2** when the smart contract launches.
+
+## Current Status: Phase 1 (Centralized MVP)
+- ✅ Users can make privacy transfers through shh.cash
+- ❌ **Nodes are NOT active** - all processing is centralized
+- 🔧 This repo is for **setup and testing only**
+
+## Phase 2 (Coming Soon - Smart Contract)
+- 🎯 Nodes will execute privacy transfers and earn SOL rewards
+- 🔗 On-chain Router program will coordinate all operations
+- 💰 Instant SOL payouts for successful executions
 
 ---
 
-## What a Node Does (MVP → Contract)
+## What This Repo Provides
 
-**Today (off‑chain MVP)**
-- Subscribe to **part offers** (split transfers) from the dispatcher.
-- Accept offers, **build & send** Solana transactions (SOL or USDC).
-- Return a signed **receipt** (tx signature).  
-- Earn SOL fee share via payout jobs (off‑chain transfer).
+**For Phase 1 (Current)**
+- 🛠️ **Setup tools** to prepare your node infrastructure
+- 🧪 **Testing utilities** to validate wallet setup and configuration
+- 📋 **Registration system** to get on the waitlist for Phase 2
+- 📚 **Documentation** and examples for node operators
 
-**Later (on‑chain Router)**
-- Exact same flow, but `execute_part` is an **on‑chain instruction**.  
-- The program pays your node **in SOL directly** per execution.  
-- No wallet change required; same `.env` and command line.
+**For Phase 2 (When Smart Contract Launches)**
+- 🎯 Subscribe to **part offers** from the on-chain Router program
+- ⚡ Execute privacy transfers via smart contract calls
+- 💰 Receive **instant SOL rewards** for successful executions
+- 📊 Monitor earnings and performance through dashboard
 
 ---
 
@@ -40,52 +53,56 @@ Run a node for the **Shh.cash** privacy relay network. This repo lets developers
 
 ---
 
-## Quick Start
+## Phase 1 Setup (Preparation Only)
+
+**⚠️ Important: Running these commands will NOT make your node operational yet!**
 
 ```bash
-# 1) Clone the repo
-git clone https://github.com/your-org/shh-node.git
+# 1) Clone this preparation repo
+git clone https://github.com/shh-cash/shh-node.git
 cd shh-node
 
-# 2) Install
-npm i
+# 2) Install dependencies
+npm install
 
-# 3) Copy env template
+# 3) Generate your node credentials
+npm run generate:keys
+
+# 4) Copy and configure environment
 cp .env.example .env.local
+# Edit .env.local with your generated keys
 ```
 
-Edit `.env.local`:
+**Configure your `.env.local`:**
 ```env
-# RPC
-RPC_URL=https://api.devnet.solana.com
+# Your node will connect to these when Phase 2 launches
+RPC_URL=https://api.mainnet-beta.solana.com
+NODE_SIGNER_SECRET=[generated_by_key_script]
+RELAY_SIGNERS=[generated_relay_wallets]
 
-# Node identity (ed25519 base58 or base64 JSON array)
-NODE_SIGNER_SECRET=[...]
-
-# One or more relay wallets (comma-separated)
-RELAY_SIGNERS=["[...key1...]", "[...key2...]"]
-
-# Dispatcher API (provided by Shh.cash)
-DISPATCHER_URL=https://dispatcher.dev.shh.cash
-
-# Optional: Sponsored fees
-FEE_PAYER_MODE=sponsored   # 'sponsored' | 'self'
-FEE_PAYER_SECRET=[...]     # only used if FEE_PAYER_MODE=self
-
-# Telemetry (optional)
-HEARTBEAT_INTERVAL_MS=30000
+# Phase 2 settings (not active yet)
+DISPATCHER_URL=https://router.shh.cash
+FEE_PAYER_MODE=sponsored
 ```
 
-Run:
+**Test your setup:**
 ```bash
-npm run start
+# Validate configuration
+npm run test:setup
+
+# Check wallet balances
+npm run test:wallets
+
+# Run mock node (simulation only)
+npm run dev:mock
 ```
 
-You should see:
+**Expected output:**
 ```
-✔ heartbeat sent
-✔ subscribed to offers
-…
+✅ Configuration valid
+✅ Wallets properly funded
+🧪 Mock node ready for Phase 2
+⏳ Waiting for smart contract launch...
 ```
 
 ---

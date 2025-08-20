@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "node": {
+    "maxConcurrent": 3,
+    "timeout": {
+      "heartbeatMs": 30000,
+      "offerTimeoutMs": 300000,
+      "txConfirmTimeoutMs": 120000
+    },
+    "retry": {
+      "max": 3,
+      "backoffMs": 1500,
+      "maxBackoffMs": 30000
+    }
+  },
+  "limits": {
+    "perTxLamports": 500000000,
+    "perDayLamports": 5000000000,
+    "maxPartsPerHour": 100
+  },
+  "rotation": {
+    "strategy": "round_robin",
+    "rebalanceThreshold": 0.001,
+    "minBalanceSOL": 0.01
+  },
+  "privacy": {
+    "avoidPercents": [5, 10, 20, 25, 33, 50],
+    "delayJitterSec": [0, 600],
+    "rotateOnLowBalance": true,
+    "randomizeOrder": true
+  },
+  "monitoring": {
+    "enableMetrics": true,
+    "metricsPort": 9090,
+    "healthCheckPort": 8080,
+    "logRotation": {
+      "enabled": true,
+      "maxSizeMB": 100,
+      "maxFiles": 10
+    }
+  },
+  "security": {
+    "requireTLS": true,
+    "allowedOrigins": ["https://dispatcher.shh.cash", "https://dispatcher.dev.shh.cash"],
+    "rateLimits": {
+      "requestsPerMinute": 100,
+      "offersPerMinute": 50
+    }
+  }
+}
